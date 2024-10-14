@@ -64,7 +64,7 @@ def pretty_format_json(data, indent=2, max_width=80, array_chunk_size=8):
 def format_json_from_file(filepath, indent=2, max_width=80, array_chunk_size=8):
     """Read JSON from file, format it, and print the result."""
     try:
-        with open(filepath, 'r') as file:
+        with open(filepath, 'r', encoding="utf8") as file:
             json_data = json.load(file)
             pretty_json = pretty_format_json(json_data, indent=indent, max_width=max_width)
             print(pretty_json)
