@@ -2619,10 +2619,11 @@ div.room > div.mods,
 div.room > div.custom-json {
   position: relative;
   padding: calc(0.5 * var(--tile-size));
+  padding-left: 0;
   border-radius: calc(0.25 * var(--tile-size));
   /* background: #609060; */
-  width: calc(100% - 3 * var(--tile-size));
-  left: calc(1 * var(--tile-size));
+  width: calc(100% - 7.5 * var(--tile-size));
+  /* left: calc(1 * var(--tile-size)); */
   z-index: 1;
   flex-shrink: 0;
 }
@@ -2668,12 +2669,12 @@ div.room > div.seats > div.player-slot > .player-slot-button {
 }
 div.room > div.seats > div.player-slot > .player-slot-button > .player-slot-button-text {
   text-align: left;
-  margin-left: calc(0.5 * var(--tile-size));
+  margin-left: calc(0.25 * var(--tile-size));
 }
 div.room > div.seats > div.player-slot > div.player-slot-label {
   /* top: calc(-0.55 * var(--tile-size)); */
   display: flex;
-  background-color: black;
+  background-color: #00000080;
   text-align: center;
   align-items: center;
   justify-content: center;
