@@ -95,18 +95,22 @@ defmodule RiichiAdvancedWeb.RoomLive do
           <% kanji_map = %{east: "東", south: "南", west: "西", north: "北"} %>
           <%= if @state.seats[seat] != nil do %>
             <div class={["player-slot", @state.seats[seat] != nil && "filled"]}>
-              <div class="player-slot-button"><%= @state.seats[seat].nickname %></div>
               <div class="player-slot-label"><%= kanji_map[seat] %></div>
+              <div class="player-slot-button">
+                <div class="player-slot-button-text"><%= @state.seats[seat].nickname %></div>
+              </div>
             </div>
           <% else %>
             <div class={["player-slot", @state.seats[seat] != nil && "filled"]}>
-              <div class="player-slot-button" phx-cancellable-click="sit" phx-value-seat={seat}>Sit</div>
               <div class="player-slot-label"><%= kanji_map[seat] %></div>
+              <div class="player-slot-button" phx-cancellable-click="sit" phx-value-seat={seat}>
+                <div class="player-slot-button-text">Empty</div>
+              </div>
             </div>
           <% end %>
         <% end %>
       </div>
-      <div class="seats-buttons">
+      <%!-- <div class="seats-buttons">
         <input id="shuffle-seats" type="checkbox" phx-click="shuffle_seats_toggled" phx-value-enabled={if @state.shuffle do "true" else "false" end} checked={@state.shuffle}>
         <label for="shuffle-seats">Shuffle seats on start?</label>
         <%= if Enum.any?(@state.seats, fn {_seat, player} -> player != nil && player.id == @id end) do %>
@@ -126,16 +130,16 @@ defmodule RiichiAdvancedWeb.RoomLive do
             </button>
           <% end %>
         <% end %>
-      </div>
-      <input type="checkbox" id="expand-checkbox" class="expand-checkbox for-mods" phx-update="ignore"/>
-      <label for="expand-checkbox"/>
+      </div> --%>
+      <%!-- <input type="checkbox" id="expand-checkbox" class="expand-checkbox for-mods" phx-update="ignore"/>
+      <label for="expand-checkbox"/> --%>
       <%= if @ruleset == "custom" do %>
         <div class="mods-title">Ruleset</div>
         <div class="custom-json">
           <.live_component module={RiichiAdvancedWeb.CollaborativeTextareaComponent} id="custom-json-textarea" ruleset={@ruleset} session_id={@session_id} room_state={@room_state} />
         </div>
       <% else %>
-        <div class="mods-title">Mods</div>
+        <%!-- <div class="mods-title">Mods</div>
         <div class={["mods", "mods-#{@state.ruleset}"]}>
           <div class="mods-inner-container">
             <%= for {category, mods} <- Enum.group_by(@state.mods, fn {_name, mod} -> mod.category end) |> Enum.sort_by(fn {category, _mods} -> Enum.find_index(@state.categories, & &1 == category) end) do %>
@@ -153,7 +157,7 @@ defmodule RiichiAdvancedWeb.RoomLive do
               <button class="mod-menu-button" phx-cancellable-click="reset_mods_to_default">Reset mods to default</button>
             </div>
           </div>
-        </div>
+        </div> --%>
       <% end %>
       <.live_component module={RiichiAdvancedWeb.ErrorWindowComponent} id="error-window" game_state={@room_state} error={@state.error}/>
       <div class="top-right-container">

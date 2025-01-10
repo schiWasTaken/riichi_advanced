@@ -2628,20 +2628,23 @@ div.room > div.custom-json {
 }
 div.room > div.seats {
   top: calc(1.5 * var(--tile-size));
-  height: calc(1 * var(--tile-size));
+  height: calc(5 * var(--tile-size));
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: calc(0.1 * var(--tile-size));
 }
 div.room > div.seats > div.player-slot {
-  position: relative;
-  width: 20%;
+  display: flex;
+  align-items: center;
+  /* position: relative; */
+  /* width: 20%; */
 }
 div.room > div.seats > div.player-slot > .player-slot-button,
 div.room > div.seats-buttons > button {
   background: var(--tile-front);
   color: black;
   border-width: 0;
-  border-radius: calc(0.25 * var(--tile-size));
+  /* border-radius: calc(0.25 * var(--tile-size)); */
   /* filter: drop-shadow(0 calc(var(--tile-size) / 8) 0 var(--tile-front-side))
           drop-shadow(0 calc(var(--tile-size) / 8) 0 var(--tile-back-side)); */
   cursor: pointer;
@@ -2653,30 +2656,39 @@ div.room > div.seats-buttons > button {
   flex-direction: column;
 }
 div.room > div.seats > div.player-slot > .player-slot-button {
-  position: absolute;
-  top: calc(0.45 * var(--tile-size));
+  flex: 1;
+  /* top: calc(1 * var(--tile-size)); */
   background: var(--player-seat-empty);
-  color: white;
+  color: #ffffff80; /* color when seat is empty*/
   border-width: 0;
-  border-radius: calc(0.25 * var(--tile-size));
   cursor: pointer;
   font-size: calc(0.5 * var(--tile-size));
   width: 100%;
-  height: calc(0.6 * var(--tile-size));
+  height: calc(1 * var(--tile-size));
+}
+div.room > div.seats > div.player-slot > .player-slot-button > .player-slot-button-text {
+  text-align: left;
+  margin-left: calc(0.5 * var(--tile-size));
 }
 div.room > div.seats > div.player-slot > div.player-slot-label {
-  position: absolute;
-  top: calc(-0.55 * var(--tile-size));
+  /* top: calc(-0.55 * var(--tile-size)); */
+  display: flex;
+  background-color: black;
   text-align: center;
-  font-size: calc(0.75 * var(--tile-size));
+  align-items: center;
+  justify-content: center;
+  /* font-size: calc(0.75 * var(--tile-size)); */
   color: white;
-  width: 100%;
+  width: calc(1 * var(--tile-size));
+  height: calc(1 * var(--tile-size));
+  font-size: calc(0.5 * var(--tile-size));
 }
 div.room > div.seats > div.player-slot.filled > .player-slot-button {
   background: var(--player-seat-filled);
   filter: none;
   cursor: default;
-  font-size: calc(0.35 * var(--tile-size));
+  color: white;
+  /* font-size: calc(0.35 * var(--tile-size)); */
 }
 div.room > div.seats > div.player-slot > button:active,
 div.room > div.seats-buttons > button:active {
