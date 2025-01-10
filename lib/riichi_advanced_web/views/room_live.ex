@@ -99,7 +99,7 @@ defmodule RiichiAdvancedWeb.RoomLive do
             </div>
           <% else %>
             <div class={["player-slot", @state.seats[seat] != nil && "filled"]}>
-              <button class="player-slot-button" phx-cancellable-click="sit" phx-value-seat={seat}>Sit</button>
+              <div class="player-slot-button" phx-cancellable-click="sit" phx-value-seat={seat}>Sit</div>
               <div class="player-slot-label"><%= seat %></div>
             </div>
           <% end %>
