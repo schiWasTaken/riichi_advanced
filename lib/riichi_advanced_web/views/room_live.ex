@@ -92,15 +92,16 @@ defmodule RiichiAdvancedWeb.RoomLive do
       </header>
       <div class="seats">
         <%= for seat <- @state.available_seats do %>
+          <% kanji_map = %{east: "東", south: "南", west: "西", north: "北"} %>
           <%= if @state.seats[seat] != nil do %>
             <div class={["player-slot", @state.seats[seat] != nil && "filled"]}>
               <div class="player-slot-button"><%= @state.seats[seat].nickname %></div>
-              <div class="player-slot-label"><%= seat %></div>
+              <div class="player-slot-label"><%= kanji_map[seat] %></div>
             </div>
           <% else %>
             <div class={["player-slot", @state.seats[seat] != nil && "filled"]}>
               <div class="player-slot-button" phx-cancellable-click="sit" phx-value-seat={seat}>Sit</div>
-              <div class="player-slot-label"><%= seat %></div>
+              <div class="player-slot-label"><%= kanji_map[seat] %></div>
             </div>
           <% end %>
         <% end %>
