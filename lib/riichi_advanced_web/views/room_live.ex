@@ -11,6 +11,7 @@ defmodule RiichiAdvancedWeb.RoomLive do
     |> assign(:players, %{east: nil, south: nil, west: nil, north: nil})
     |> assign(:room_state, nil)
     |> assign(:messages, [])
+    |> assign(:symbols, %{east: "東", south: "南", west: "西", north: "北"})
     |> assign(:state, %Room{})
     if socket.root_pid != nil do
       # start a new room process, if it doesn't exist already
@@ -92,23 +93,26 @@ defmodule RiichiAdvancedWeb.RoomLive do
       </header>
       <div class="seats">
         <%= for seat <- @state.available_seats do %>
-          <% kanji_map = %{east: "東", south: "南", west: "西", north: "北"} %>
           <%= if @state.seats[seat] != nil do %>
             <div class={["player-slot", @state.seats[seat] != nil && "filled"]}>
-              <div class="player-slot-label"><%= kanji_map[seat] %></div>
+              <div class="player-slot-label"><%= @symbols[seat] %></div>
               <div class="player-slot-button">
                 <div class="player-slot-button-text"><%= @state.seats[seat].nickname %></div>
               </div>
             </div>
           <% else %>
             <div class={["player-slot", @state.seats[seat] != nil && "filled"]}>
-              <div class="player-slot-label"><%= kanji_map[seat] %></div>
+              <div class="player-slot-label"><%= @symbols[seat] %></div>
               <div class="player-slot-button" phx-cancellable-click="sit" phx-value-seat={seat}>
                 <div class="player-slot-button-text">Empty</div>
               </div>
             </div>
           <% end %>
         <% end %>
+        <div class="seats-buttons circle-checkbox">
+          <input id="shuffle-seats" type="checkbox" phx-click="shuffle_seats_toggled" phx-value-enabled={if @state.shuffle do "true" else "false" end} checked={@state.shuffle}>
+          <label for="shuffle-seats">Shuffle seats on start?</label>
+        </div>
       </div>
       <%!-- <div class="seats-buttons">
         <input id="shuffle-seats" type="checkbox" phx-click="shuffle_seats_toggled" phx-value-enabled={if @state.shuffle do "true" else "false" end} checked={@state.shuffle}>
@@ -131,34 +135,6 @@ defmodule RiichiAdvancedWeb.RoomLive do
           <% end %>
         <% end %>
       </div> --%>
-      <%!-- <input type="checkbox" id="expand-checkbox" class="expand-checkbox for-mods" phx-update="ignore"/>
-      <label for="expand-checkbox"/> --%>
-      <%= if @ruleset == "custom" do %>
-        <div class="mods-title">Ruleset</div>
-        <div class="custom-json">
-          <.live_component module={RiichiAdvancedWeb.CollaborativeTextareaComponent} id="custom-json-textarea" ruleset={@ruleset} session_id={@session_id} room_state={@room_state} />
-        </div>
-      <% else %>
-        <%!-- <div class="mods-title">Mods</div>
-        <div class={["mods", "mods-#{@state.ruleset}"]}>
-          <div class="mods-inner-container">
-            <%= for {category, mods} <- Enum.group_by(@state.mods, fn {_name, mod} -> mod.category end) |> Enum.sort_by(fn {category, _mods} -> Enum.find_index(@state.categories, & &1 == category) end) do %>
-              <div class="mod-category" :if={category}>
-                <%= category %>
-                <button class="mod-menu-button" phx-cancellable-click="toggle_category" phx-value-category={category}>Toggle all</button>
-              </div>
-              <%= for {mod, mod_details} <- Enum.sort_by(mods, fn {_name, mod} -> mod.index end) do %>
-                <input id={mod} type="checkbox" phx-click="toggle_mod" phx-value-mod={mod} phx-value-enabled={if @state.mods[mod].enabled do "true" else "false" end} checked={@state.mods[mod].enabled}>
-                <label for={mod} title={mod_details.desc} class={["mod", mod_details.class]}><%= mod_details.name %></label>
-              <% end %>
-              <div class="mod-category-spacer"></div>
-            <% end %>
-            <div class="reset-to-default-button">
-              <button class="mod-menu-button" phx-cancellable-click="reset_mods_to_default">Reset mods to default</button>
-            </div>
-          </div>
-        </div> --%>
-      <% end %>
       <.live_component module={RiichiAdvancedWeb.ErrorWindowComponent} id="error-window" game_state={@room_state} error={@state.error}/>
       <div class="top-right-container">
         <.live_component module={RiichiAdvancedWeb.MenuButtonsComponent} id="menu-buttons" />
