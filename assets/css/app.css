@@ -32,13 +32,13 @@ html, body {
   justify-content: center;
   align-content: center;
 }
-.main div.room {
+.main div.room-container {
   width: 100%;
   height: 100%;
   display: flex;
   flex: 4;
   user-select: none;
-  align-self: center;
+  background: #299B47;
 }
 .main div.messages-container {
   background: #3f3f3f;
@@ -2634,8 +2634,9 @@ div.lobby > button.create-room {
 
 /* room screen */
 div.room {
-  background: #299B47;
   display: flex;
+  width: 100%;
+  height: 100%;
   position: relative;
   flex-direction: column;
   row-gap: calc(0.25 * var(--tile-size));
