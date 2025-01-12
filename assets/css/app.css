@@ -9,8 +9,9 @@ html, body {
 }
 .main {
   height: 100vh;
-  display: grid;
-  gap: 3em;
+  display: flex;
+  flex-direction: column;
+  gap: calc(3 * 0.5 * var(--tile-size));
   place-items: center;
   --tile-size: min(calc(90vw / 16), calc(80vh / 16));
   --tile-front: #f4f0eb;
@@ -22,11 +23,13 @@ html, body {
   --player-seat-hover: #2332294D;
   position: relative;
   overflow: visible;
+  margin-top: calc(0.5 * var(--tile-size));
 }
 .main-items {
-  gap: 1em;
+  max-height: 80vh;
+  gap: calc(0.5 * var(--tile-size));
   display: flex;
-  width: 60%;
+  width: 60vw;
   height: 100%;
   flex-direction: row;
   justify-content: center;
@@ -42,9 +45,8 @@ html, body {
 }
 .main div.messages-container {
   background: #3f3f3f;
-  border-radius: calc(0.25 * var(--tile-size));
   color: white;
-  width: 80vh;
+  width: 100%;
   height: 80vh;
   font-size: calc(0.4 * var(--tile-size));
   user-select: text;
@@ -75,21 +77,25 @@ html, body {
 
 /* portrait (mobile) */
 @media (max-aspect-ratio: 1.2/1) {
-  .main {
-    max-height: 60vh;
+  main {
     --tile-size: min(calc(90vw / 16), calc(60vh / 16));
   }
   /* CSS rules for viewports where the height is greater than the width */
   .main div.messages-container {
     flex-direction: column;
     justify-content: flex-start;
+    flex: 2;
   }
   .main div.messages-container > div.messages {
     flex-direction: column-reverse;
   }
-
+  .main div.room-container {
+    flex: 3;
+  }
   .main-items {
+    max-height: 100%;
     flex-direction: column;
+    width: 100%;
   }
 }
 
@@ -2103,6 +2109,10 @@ div.game-modal-container > a.goto-index-button:active {
 
 /* ruleset textbox */
 div.ruleset {
+  position: absolute;
+  top: 100vh;
+  display: flex;
+  flex-direction: column;
   width: min(90vw, 80vh);
   height: 90vh;
   user-select: text;
@@ -2641,6 +2651,7 @@ div.room {
   flex-direction: column;
   row-gap: calc(0.25 * var(--tile-size));
   color: white;
+  padding: calc(0.5 * var(--tile-size));
 }
 div.room > header {
   display: flex;
@@ -2701,13 +2712,13 @@ div.room > div.custom-json {
   padding-left: 0;
   border-radius: calc(0.25 * var(--tile-size));
   /* background: #609060; */
-  width: calc(100% - 6.5 * var(--tile-size));
   /* left: calc(1 * var(--tile-size)); */
   z-index: 1;
   flex-shrink: 0;
 }
 div.room > div.seats {
   height: calc(5 * var(--tile-size));
+  max-width: calc(10 * var(--tile-size));
   display: flex;
   flex-direction: column;
   gap: calc(0.15 * var(--tile-size));
