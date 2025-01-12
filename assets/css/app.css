@@ -160,6 +160,37 @@ input:checked + label { background: var(--tile-back); }
 .circle-checkbox input[type="checkbox"]:checked + label::before {
   background-color: #fff;
   border-color: #fff;
+  animation: growShrinkOn 0.1s ease forwards; /* Grow first, then shrink */
+}
+
+.circle-checkbox input[type="checkbox"]:not(:checked) + label::before {
+  animation: shrinkGrowOff 0.1s ease forwards; /* Shrink first, then grow */
+}
+
+/* Grow first, then shrink */
+@keyframes growShrinkOn {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Shrink first, then grow */
+@keyframes shrinkGrowOff {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.8);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 /* hands */
