@@ -2678,7 +2678,7 @@ div.room > div.custom-json {
   padding-left: 0;
   border-radius: calc(0.25 * var(--tile-size));
   /* background: #609060; */
-  width: calc(100% - 7.5 * var(--tile-size));
+  width: calc(100% - 6.5 * var(--tile-size));
   /* left: calc(1 * var(--tile-size)); */
   z-index: 1;
   flex-shrink: 0;
@@ -2688,13 +2688,12 @@ div.room > div.seats {
   height: calc(5 * var(--tile-size));
   display: flex;
   flex-direction: column;
-  gap: calc(0.1 * var(--tile-size));
+  gap: calc(0.15 * var(--tile-size));
 }
 div.room > div.seats > div.player-slot {
   display: flex;
   align-items: center;
-  /* position: relative; */
-  /* width: 20%; */
+  gap: calc(0.15 * var(--tile-size));
 }
 div.room > div.seats > div.seats-buttons {
   display: flex;
@@ -2702,7 +2701,11 @@ div.room > div.seats > div.seats-buttons {
   position: relative;
   padding: calc(0.25 * var(--tile-size));
 }
-div.room > div.seats > div.player-slot > .player-slot-button {
+div.room > div.seats > div.player-slot .player-slot-item {
+  display: flex;
+  flex: 1;
+}
+div.room > div.seats > div.player-slot .player-slot-button {
   display: flex;
   justify-content: center;
   align-content: center;
@@ -2723,20 +2726,19 @@ div.room > div.seats > div.player-slot > .player-slot-button {
   background-repeat: no-repeat;
   transition: background-size 0.1s ease-in-out;
 }
-div.room > div.seats > div.player-slot > .player-slot-button:hover {
+div.room > div.seats > div.player-slot .player-slot-button:hover {
   background-size: 100% 100%; /* Expand the hover color to fill the button */
   color: #ffffffff;
 }
-div.room > div.seats > div.player-slot > .player-slot-button:active {
+div.room > div.seats > div.player-slot .player-slot-button:active {
   transform: scaleY(0.9);
   transition: transform 0.1s ease-in-out;
 }
-
-div.room > div.seats > div.player-slot > .player-slot-button > .player-slot-button-text {
+div.room > div.seats > div.player-slot .player-slot-button .player-slot-button-text {
   text-align: left;
   margin-left: calc(0.25 * var(--tile-size));
 }
-div.room > div.seats > div.player-slot > div.player-slot-label {
+div.room > div.seats > div.player-slot div.player-slot-label {
   /* top: calc(-0.55 * var(--tile-size)); */
   display: flex;
   background-color: #00000080;
@@ -2749,14 +2751,24 @@ div.room > div.seats > div.player-slot > div.player-slot-label {
   height: calc(1 * var(--tile-size));
   font-size: calc(0.5 * var(--tile-size));
 }
-div.room > div.seats > div.player-slot.filled > .player-slot-button {
+div.room > div.seats > div.player-slot.filled .player-slot-button {
   background: var(--player-seat-filled);
   filter: none;
   cursor: default;
   color: white;
   /* font-size: calc(0.35 * var(--tile-size)); */
 }
-div.room > div.seats > div.player-slot > button:active {
+div.room > div.seats > div.player-slot.empty .get-up-button {
+  visibility: hidden;
+}
+div.room > div.seats > div.player-slot .get-up-button {
+  width: calc(1* var(--tile-size));
+  height: calc(1* var(--tile-size));
+  background-color: #DBDBDB; /* Flat style with no background */
+  border: none;
+  cursor: pointer; /* Show pointer cursor on hover */
+}
+div.room > div.seats > div.player-slot button:active {
   /* filter: drop-shadow(0 calc(var(--tile-size) / 8) 0 var(--tile-front-side)); */
   /* transform: translateY(calc(var(--tile-size) / 8)); */
   z-index: 1;

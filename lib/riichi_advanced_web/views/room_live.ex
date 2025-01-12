@@ -97,17 +97,26 @@ defmodule RiichiAdvancedWeb.RoomLive do
         <%= for seat <- @state.available_seats do %>
           <%= if @state.seats[seat] != nil do %>
             <div class={["player-slot", @state.seats[seat] != nil && "filled"]}>
-              <div class="player-slot-label"><%= @symbols[seat] %></div>
-              <div class="player-slot-button">
-                <div class="player-slot-button-text"><%= @state.seats[seat].nickname %></div>
+              <div class="player-slot-item">
+                <div class="player-slot-label"><%= @symbols[seat] %></div>
+                <div class="player-slot-button">
+                  <div class="player-slot-button-text"><%= @state.seats[seat].nickname %></div>
+                </div>
               </div>
+              <%= if @state.seats[seat].id == @id do %>
+                <button class="get-up-button" phx-cancellable-click="get_up">–</button>
+              <% end %>
             </div>
           <% else %>
-            <div class={["player-slot", @state.seats[seat] != nil && "filled"]}>
-              <div class="player-slot-label"><%= @symbols[seat] %></div>
-              <div class="player-slot-button" phx-cancellable-click="sit" phx-value-seat={seat}>
-                <div class="player-slot-button-text">Empty</div>
+            <div class="player-slot empty">
+              <div class="player-slot-item">
+                  <div class="player-slot-label"><%= @symbols[seat] %></div>
+                  <div class="player-slot-button" phx-cancellable-click="sit" phx-value-seat={seat}>
+                    <div class="player-slot-button-text">Empty</div>
+                  </div>
               </div>
+              <%!-- dummy button for alignment --%>
+              <button class="get-up-button">–</button>
             </div>
           <% end %>
         <% end %>
