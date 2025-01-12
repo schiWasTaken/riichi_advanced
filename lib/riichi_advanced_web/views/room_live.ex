@@ -61,107 +61,113 @@ defmodule RiichiAdvancedWeb.RoomLive do
 
   def render(assigns) do
     ~H"""
-    <div id="container" class="room" phx-hook="ClickListener">
-      <header>
-        <h1>Room</h1>
-        <div class="button-container">
-          <div class="private-toggle">
-            <input id="private-toggle" type="checkbox" phx-click="private_toggled" phx-value-enabled={if @state.private do "true" else "false" end} checked={@state.private}>
-            <label for="private-toggle">
-              <%= if @state.private do %>
-                Private
-              <% else %>
-                Public
-              <% end %>
-            </label>
-          </div>
-          <div class="session">Code:&nbsp;
-            <div class="session-tiles">
-              <%= for tile <- String.split(@session_id, ",") do %>
-                <div class={["tile", tile]}></div>
-              <% end %>
-            </div>
-          </div>
-        </div>
+    <div class="main">
+      <div class="main-items">
+            <div class="room" id="container" phx-hook="ClickListener">
+              <header>
+                <h1>Room</h1>
+                <div class="button-container">
+                  <div class="private-toggle">
+                    <input id="private-toggle" type="checkbox" phx-click="private_toggled" phx-value-enabled={if @state.private do "true" else "false" end} checked={@state.private}>
+                    <label for="private-toggle">
+                      <%= if @state.private do %>
+                        Private
+                      <% else %>
+                        Public
+                      <% end %>
+                    </label>
+                  </div>
+                  <div class="session">Code:&nbsp;
+                    <div class="session-tiles">
+                      <%= for tile <- String.split(@session_id, ",") do %>
+                        <div class={["tile", tile]}></div>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
 
-        <%!-- <div class="variant">
-          Variant:&nbsp;<b><%= @display_name %></b>
-          <%= if @state.tutorial_link != nil do %>
-            <br/>
-            <a class="tutorial-link" href={@state.tutorial_link} target="_blank">
-              <%= if @ruleset == "custom" do %>
-                (Documentation)
-              <% else %>
-                (Rules)
-              <% end %>
-            </a>
-          <% end %>
-        </div> --%>
-      </header>
-      <div class="seats">
-        <%= for seat <- @state.available_seats do %>
-          <%= if @state.seats[seat] != nil do %>
-            <div class={["player-slot", @state.seats[seat] != nil && "filled"]}>
-              <div class="player-slot-item">
-                <div class="player-slot-label"><%= @symbols[seat] %></div>
-                <div class="player-slot-button">
-                  <div class="player-slot-button-text"><%= @state.seats[seat].nickname %></div>
+                <%!-- <div class="variant">
+                  Variant:&nbsp;<b><%= @display_name %></b>
+                  <%= if @state.tutorial_link != nil do %>
+                    <br/>
+                    <a class="tutorial-link" href={@state.tutorial_link} target="_blank">
+                      <%= if @ruleset == "custom" do %>
+                        (Documentation)
+                      <% else %>
+                        (Rules)
+                      <% end %>
+                    </a>
+                  <% end %>
+                </div> --%>
+              </header>
+              <div class="seats">
+                <%= for seat <- @state.available_seats do %>
+                  <%= if @state.seats[seat] != nil do %>
+                    <div class={["player-slot", @state.seats[seat] != nil && "filled"]}>
+                      <div class="player-slot-item">
+                        <div class="player-slot-label"><%= @symbols[seat] %></div>
+                        <div class="player-slot-button">
+                          <div class="player-slot-button-text"><%= @state.seats[seat].nickname %></div>
+                        </div>
+                      </div>
+                      <%= if @state.seats[seat].id == @id do %>
+                        <button class="get-up-button" phx-cancellable-click="get_up">–</button>
+                      <% else %>
+                        <button class="get-up-button dummy">–</button>
+                      <% end %>
+                    </div>
+                  <% else %>
+                    <div class="player-slot empty">
+                      <div class="player-slot-item">
+                          <div class="player-slot-label"><%= @symbols[seat] %></div>
+                          <div class="player-slot-button" phx-cancellable-click="sit" phx-value-seat={seat}>
+                            <div class="player-slot-button-text">Empty</div>
+                          </div>
+                      </div>
+                      <%!-- dummy button for alignment --%>
+                      <button class="get-up-button dummy">–</button>
+                    </div>
+                  <% end %>
+                <% end %>
+                <div class="seats-buttons circle-checkbox">
+                  <input id="shuffle-seats" type="checkbox" phx-click="shuffle_seats_toggled" phx-value-enabled={if @state.shuffle do "true" else "false" end} checked={@state.shuffle}>
+                  <label for="shuffle-seats">Shuffle seats on start?</label>
                 </div>
               </div>
-              <%= if @state.seats[seat].id == @id do %>
-                <button class="get-up-button" phx-cancellable-click="get_up">–</button>
-              <% else %>
-                <button class="get-up-button dummy">–</button>
-              <% end %>
+              <%!-- <div class="seats-buttons">
+                <input id="shuffle-seats" type="checkbox" phx-click="shuffle_seats_toggled" phx-value-enabled={if @state.shuffle do "true" else "false" end} checked={@state.shuffle}>
+                <label for="shuffle-seats">Shuffle seats on start?</label>
+                <%= if Enum.any?(@state.seats, fn {_seat, player} -> player != nil && player.id == @id end) do %>
+                  <button class="get-up-button" phx-cancellable-click="get_up">Get up</button>
+                <% end %>
+                <%= if not Enum.all?(@state.seats, fn {_seat, player} -> player == nil end) do %>
+                  <%= if @state.starting do %>
+                    <button class="start-game-button">
+                      Starting game...
+                    </button>
+                  <% else %>
+                    <button class="start-game-button" phx-cancellable-click="start_game">
+                      Start game
+                      <%= if nil in Map.values(@state.seats) do %>
+                      (with AI)
+                      <% end %>
+                    </button>
+                  <% end %>
+                <% end %>
+              </div> --%>
+              <.live_component module={RiichiAdvancedWeb.ErrorWindowComponent} id="error-window" game_state={@room_state} error={@state.error}/>
             </div>
-          <% else %>
-            <div class="player-slot empty">
-              <div class="player-slot-item">
-                  <div class="player-slot-label"><%= @symbols[seat] %></div>
-                  <div class="player-slot-button" phx-cancellable-click="sit" phx-value-seat={seat}>
-                    <div class="player-slot-button-text">Empty</div>
-                  </div>
+            <div class="top-right-container">
+                <.live_component module={RiichiAdvancedWeb.MenuButtonsComponent} id="menu-buttons" />
               </div>
-              <%!-- dummy button for alignment --%>
-              <button class="get-up-button dummy">–</button>
-            </div>
-          <% end %>
-        <% end %>
-        <div class="seats-buttons circle-checkbox">
-          <input id="shuffle-seats" type="checkbox" phx-click="shuffle_seats_toggled" phx-value-enabled={if @state.shuffle do "true" else "false" end} checked={@state.shuffle}>
-          <label for="shuffle-seats">Shuffle seats on start?</label>
-        </div>
-      </div>
-      <%!-- <div class="seats-buttons">
-        <input id="shuffle-seats" type="checkbox" phx-click="shuffle_seats_toggled" phx-value-enabled={if @state.shuffle do "true" else "false" end} checked={@state.shuffle}>
-        <label for="shuffle-seats">Shuffle seats on start?</label>
-        <%= if Enum.any?(@state.seats, fn {_seat, player} -> player != nil && player.id == @id end) do %>
-          <button class="get-up-button" phx-cancellable-click="get_up">Get up</button>
-        <% end %>
-        <%= if not Enum.all?(@state.seats, fn {_seat, player} -> player == nil end) do %>
-          <%= if @state.starting do %>
-            <button class="start-game-button">
-              Starting game...
-            </button>
-          <% else %>
-            <button class="start-game-button" phx-cancellable-click="start_game">
-              Start game
-              <%= if nil in Map.values(@state.seats) do %>
-              (with AI)
-              <% end %>
-            </button>
-          <% end %>
-        <% end %>
-      </div> --%>
-      <.live_component module={RiichiAdvancedWeb.ErrorWindowComponent} id="error-window" game_state={@room_state} error={@state.error}/>
-      <div class="top-right-container">
-        <.live_component module={RiichiAdvancedWeb.MenuButtonsComponent} id="menu-buttons" />
-      </div>
-      <.live_component module={RiichiAdvancedWeb.MessagesComponent} id="messages" messages={@messages} />
+              <.live_component module={RiichiAdvancedWeb.MessagesComponent} id="messages" messages={@messages} />
+          </div>
       <div class="ruleset">
         <textarea readonly><%= @state.ruleset_json %></textarea>
       </div>
     </div>
+
+
     """
   end
 
