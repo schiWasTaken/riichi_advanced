@@ -64,22 +64,27 @@ defmodule RiichiAdvancedWeb.RoomLive do
     <div id="container" class="room" phx-hook="ClickListener">
       <header>
         <h1>Room</h1>
-        <div class="session">Room:&nbsp;
-          <%= for tile <- String.split(@session_id, ",") do %>
-            <div class={["tile", tile]}></div>
-          <% end %>
+        <div class="button-container">
+          <div class="private-toggle">
+            <input id="private-toggle" type="checkbox" phx-click="private_toggled" phx-value-enabled={if @state.private do "true" else "false" end} checked={@state.private}>
+            <label for="private-toggle">
+              <%= if @state.private do %>
+                Private
+              <% else %>
+                Public
+              <% end %>
+            </label>
+          </div>
+          <div class="session">Code:&nbsp;
+            <div class="session-tiles">
+              <%= for tile <- String.split(@session_id, ",") do %>
+                <div class={["tile", tile]}></div>
+              <% end %>
+            </div>
+          </div>
         </div>
-        <div class="private-toggle">
-          <input id="private-toggle" type="checkbox" phx-click="private_toggled" phx-value-enabled={if @state.private do "true" else "false" end} checked={@state.private}>
-          <label for="private-toggle">
-            <%= if @state.private do %>
-              Private
-            <% else %>
-              Public
-            <% end %>
-          </label>
-        </div>
-        <div class="variant">
+
+        <%!-- <div class="variant">
           Variant:&nbsp;<b><%= @display_name %></b>
           <%= if @state.tutorial_link != nil do %>
             <br/>
@@ -91,7 +96,7 @@ defmodule RiichiAdvancedWeb.RoomLive do
               <% end %>
             </a>
           <% end %>
-        </div>
+        </div> --%>
       </header>
       <div class="seats">
         <%= for seat <- @state.available_seats do %>
@@ -105,6 +110,8 @@ defmodule RiichiAdvancedWeb.RoomLive do
               </div>
               <%= if @state.seats[seat].id == @id do %>
                 <button class="get-up-button" phx-cancellable-click="get_up">–</button>
+              <% else %>
+                <button class="get-up-button dummy">–</button>
               <% end %>
             </div>
           <% else %>
@@ -116,7 +123,7 @@ defmodule RiichiAdvancedWeb.RoomLive do
                   </div>
               </div>
               <%!-- dummy button for alignment --%>
-              <button class="get-up-button">–</button>
+              <button class="get-up-button dummy">–</button>
             </div>
           <% end %>
         <% end %>
