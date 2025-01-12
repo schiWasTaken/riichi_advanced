@@ -2645,6 +2645,28 @@ div.room > header > div.session {
   flex-direction: row;
   align-items: center;
 }
+div.room > header > div.private-toggle label {
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 120px; /* Adjust width as needed */
+  height: 40px; /* Adjust height as needed */
+  background-color: white;
+  border-radius: 20px; /* Fully rounded corners */
+  cursor: pointer;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  color: #333;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+div.room > header > div.private-toggle input[type="checkbox"]:checked + label {
+  background-color: #D9D9D9; /* Blue for "Public" */
+  color: black;
+}
+
 div.room > header > div.variant > a.tutorial-link {
   color: white;
 }
@@ -2705,7 +2727,6 @@ div.room > div.seats > div.player-slot > .player-slot-button:hover {
   background-size: 100% 100%; /* Expand the hover color to fill the button */
   color: #ffffffff;
 }
-
 div.room > div.seats > div.player-slot > .player-slot-button:active {
   transform: scaleY(0.9);
   transition: transform 0.1s ease-in-out;
