@@ -6,12 +6,7 @@ html, body {
   height: 100%;
   margin: 0;
 }
-.main {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  gap: calc(3 * 0.5 * var(--tile-size));
-  place-items: center;
+main {
   --tile-size: min(calc(90vw / 16), calc(80vh / 16));
   --tile-front: #f4f0eb;
   --tile-front-side: #eee4d8;
@@ -20,10 +15,23 @@ html, body {
   --player-seat-filled: #2332292B;
   --player-seat-empty: #23322917;
   --player-seat-hover: #2332294D;
+}
+.main-container {
+  display: flex;
+  flex-direction: column;
+  gap: calc(1 * var(--tile-size));
+  place-items: center;
+}
+.main-game {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: calc(3 * 0.5 * var(--tile-size));
+  place-items: center;
   position: relative;
   overflow: visible;
 }
-.main-items {
+.main-game-content {
   padding: calc(1.5 * var(--tile-size));
   gap: calc(0.5 * var(--tile-size));
   display: flex;
@@ -33,7 +41,7 @@ html, body {
   justify-content: center;
   align-content: center;
 }
-.main div.room-container {
+.main-game div.room-container {
   aspect-ratio: 1 / 1;
   /* min-width: calc(12 * var(--tile-size));
   max-width: calc(16 * var(--tile-size));
@@ -45,7 +53,7 @@ html, body {
   user-select: none;
   background: #299B47;
 }
-.main div.messages-container {
+.main-game div.messages-container {
   background: #3f3f3f;
   color: white;
   width: 100%;
@@ -54,23 +62,23 @@ html, body {
   flex: 2;
   max-width: calc(8 * var(--tile-size));
 }
-.main div.messages-container > div.messages {
+.main-game div.messages-container > div.messages {
   width: 100%;
   white-space: wrap;
   padding: 0.5rem;
   box-sizing: border-box;
 }
-.main div.messages-container > div.messages span.bold {
+.main-game div.messages-container > div.messages span.bold {
   font-weight: 800;
 }
 /* make scrolling work */
 /* https://stackoverflow.com/a/78124664 */
-.main div.messages-container {
+.main-game div.messages-container {
   display: flex;
   flex-direction: column-reverse;
   overflow-y: auto;
 }
-.main div.messages-container > div.messages {
+.main-game div.messages-container > div.messages {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -81,20 +89,26 @@ html, body {
   main {
     --tile-size: min(calc(90vw / 16), calc(60vh / 16));
   }
+  .main-game {
+    /* height: unset; */
+  }
   /* CSS rules for viewports where the height is greater than the width */
-  .main div.messages-container {
+  .main-game div.messages-container {
     flex-direction: column;
     justify-content: flex-start;
-    flex: 2;
-    height: 80vh;
+    min-height: calc(4 * var(--tile-size));
+    max-width: calc(16 * var(--tile-size));
   }
-  .main div.messages-container > div.messages {
+  .main-game div.messages-container > div.messages {
     flex-direction: column-reverse;
   }
-  .main div.room-container {
-    flex: 3;
+  .main-game div.room-container {
+    flex: 1;
+    max-width: calc(16 * var(--tile-size));
   }
-  .main-items {
+  .main-game-content {
+    padding: unset;
+    padding-top: calc(1.5 * var(--tile-size));
     max-height: 100%;
     flex-direction: column;
     width: 100%;
@@ -2115,7 +2129,7 @@ div.ruleset {
   top: 100vh;
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 90%;
   height: 90vh;
   user-select: text;
 }
@@ -2124,7 +2138,7 @@ div.ruleset::before {
   color: white;
 }
 div.ruleset > textarea {
-  width: 90%;
+  width: 100%;
   height: 100%;
   background: #3f3f3f;
   color: white;
