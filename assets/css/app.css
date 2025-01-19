@@ -3,9 +3,8 @@ html, body {
   background: black;
   font-family: "Open Sans", Avenir, Montserrat, Corbel, "URW Gothic", source-sans-pro, sans-serif;
   font-weight: normal;
-  overflow-x: hidden;
-  overflow-y: visible;
   height: 100%;
+  margin: 0;
 }
 .main {
   height: 100vh;
@@ -23,19 +22,22 @@ html, body {
   --player-seat-hover: #2332294D;
   position: relative;
   overflow: visible;
-  margin-top: calc(0.5 * var(--tile-size));
 }
 .main-items {
-  max-height: 80vh;
+  padding: calc(1.5 * var(--tile-size));
   gap: calc(0.5 * var(--tile-size));
   display: flex;
-  width: 60vw;
+  /* width: 60vw; */
   height: 100%;
   flex-direction: row;
   justify-content: center;
   align-content: center;
 }
 .main div.room-container {
+  aspect-ratio: 1 / 1;
+  /* min-width: calc(12 * var(--tile-size));
+  max-width: calc(16 * var(--tile-size));
+  max-height: calc(16 * var(--tile-size)); */
   width: 100%;
   height: 100%;
   display: flex;
@@ -47,11 +49,10 @@ html, body {
   background: #3f3f3f;
   color: white;
   width: 100%;
-  height: 80vh;
   font-size: calc(0.4 * var(--tile-size));
   user-select: text;
   flex: 2;
-  align-self: center;
+  max-width: calc(8 * var(--tile-size));
 }
 .main div.messages-container > div.messages {
   width: 100%;
@@ -85,6 +86,7 @@ html, body {
     flex-direction: column;
     justify-content: flex-start;
     flex: 2;
+    height: 80vh;
   }
   .main div.messages-container > div.messages {
     flex-direction: column-reverse;
@@ -96,6 +98,7 @@ html, body {
     max-height: 100%;
     flex-direction: column;
     width: 100%;
+    place-items: center;
   }
 }
 
@@ -422,7 +425,7 @@ div.pond > div.tile.sideways { transform: translateY(calc(-0.25 * var(--tile-siz
 }
 /* portrait (mobile) */
 @media (max-aspect-ratio: 1.2/1) {
-  .main {
+  main {
     --mobile-scale-factor: 1.5;
   }
   input.mobile-zoom-checkbox + label {
@@ -2109,11 +2112,10 @@ div.game-modal-container > a.goto-index-button:active {
 
 /* ruleset textbox */
 div.ruleset {
-  position: absolute;
   top: 100vh;
   display: flex;
   flex-direction: column;
-  width: min(90vw, 80vh);
+  width: 100%;
   height: 90vh;
   user-select: text;
 }
@@ -2122,23 +2124,13 @@ div.ruleset::before {
   color: white;
 }
 div.ruleset > textarea {
-  width: 100%;
+  width: 90%;
   height: 100%;
   background: #3f3f3f;
   color: white;
   white-space: pre;
+  margin: auto;
 }
-/* landscape */
-@media (min-aspect-ratio: 1.2/1) {
-  div.ruleset {
-    width: calc(min(90vw, 80vh) + 0.5 * var(--tile-size) + min(50%, calc(40vw - 20% - 0.5 * var(--tile-size))));
-  }
-}
-
-
-
-
-
 
 /* saki cards */
 div.saki-card {

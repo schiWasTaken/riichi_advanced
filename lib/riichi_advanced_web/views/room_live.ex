@@ -159,15 +159,15 @@ defmodule RiichiAdvancedWeb.RoomLive do
             <.live_component module={RiichiAdvancedWeb.ErrorWindowComponent} id="error-window" game_state={@room_state} error={@state.error}/>
           </div>
         </div>
-            <div class="top-right-container">
+            <%!-- <div class="top-right-container">
                 <.live_component module={RiichiAdvancedWeb.MenuButtonsComponent} id="menu-buttons" />
-              </div>
+              </div> --%>
               <.live_component module={RiichiAdvancedWeb.MessagesComponent} id="messages" messages={@messages} />
           </div>
-      <div class="ruleset">
+    </div>
+    <div class="ruleset">
         <textarea readonly><%= @state.ruleset_json %></textarea>
       </div>
-    </div>
 
 
     """
